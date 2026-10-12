@@ -3,6 +3,16 @@ import AVFoundation
 import CoreLocation
 import Foundation
 
+private func L(_ key: String, _ arguments: CVarArg...) -> String {
+    let format = NSLocalizedString(key, bundle: .main, comment: "")
+    guard !arguments.isEmpty else { return format }
+    return String(format: format, locale: .current, arguments: arguments)
+}
+
+private var weatherServiceLanguage: String {
+    Locale.preferredLanguages.first?.lowercased().hasPrefix("ru") == true ? "ru" : "en"
+}
+
 private enum WeatherScene: String, CaseIterable {
     case clear
     case cloudy
@@ -11,10 +21,10 @@ private enum WeatherScene: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .clear: "Ясно"
-        case .cloudy: "Облачно / туман / снег"
-        case .night: "Ночь"
-        case .rain: "Дождь / гроза"
+        case .clear: L("scene.clear")
+        case .cloudy: L("scene.cloudy")
+        case .night: L("scene.night")
+        case .rain: L("scene.rain")
         }
     }
 
@@ -205,7 +215,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
         if WeatherScene.allCases.allSatisfy(wallpaper.hasVideo(for:)) {
             refreshWeather()
         } else {
-            setStatus("Выберите видео для каждой погодной сцены")
+            setStatus(L("status.selectEachScene"))
         }
 
         refreshTimer = Timer.scheduledTimer(
@@ -229,22 +239,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
         statusItem.button?.toolTip = "WeatherLoop"
 
         let menu = NSMenu()
-        statusMenuItem = NSMenuItem(title: "Подготовка…", action: nil, keyEquivalent: "")
+        statusMenuItem = NSMenuItem(title: L("status.preparing"), action: nil, keyEquivalent: "")
         statusMenuItem.isEnabled = false
         menu.addItem(statusMenuItem)
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Обновить погоду", action: #selector(refreshWeather), keyEquivalent: "r")
-        menu.addItem(withTitle: "Задать город…", action: #selector(promptForCity), keyEquivalent: "")
-        menu.addItem(withTitle: "Использовать геопозицию Mac", action: #selector(useMacLocation), keyEquivalent: "")
+        menu.addItem(withTitle: L("menu.refreshWeather"), action: #selector(refreshWeather), keyEquivalent: "r")
+        menu.addItem(withTitle: L("menu.setCity"), action: #selector(promptForCity), keyEquivalent: "")
+        menu.addItem(withTitle: L("menu.useMacLocation"), action: #selector(useMacLocation), keyEquivalent: "")
 
-        let videoMenu = NSMenu(title: "Видео для погоды")
+        let videoMenu = NSMenu(title: L("menu.videosForWeather"))
         for scene in WeatherScene.allCases {
             let item = NSMenuItem(title: "\(scene.title)…", action: #selector(chooseVideo(_:)), keyEquivalent: "")
             item.representedObject = scene.rawValue
             item.target = self
             videoMenu.addItem(item)
         }
-        let videoMenuItem = NSMenuItem(title: "Видео для погоды", action: nil, keyEquivalent: "")
+        let videoMenuItem = NSMenuItem(title: L("menu.videosForWeather"), action: nil, keyEquivalent: "")
         videoMenuItem.submenu = videoMenu
         menu.addItem(videoMenuItem)
 
@@ -252,11 +262,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
         menu.addItem(loginMenuItem)
         menu.addItem(.separator())
         soundMenuItem = NSMenuItem(title: soundMenuTitle, action: #selector(toggleSound), keyEquivalent: "m")
-        pauseMenuItem = NSMenuItem(title: "Пауза", action: #selector(togglePause), keyEquivalent: "p")
+        pauseMenuItem = NSMenuItem(title: L("menu.pause"), action: #selector(togglePause), keyEquivalent: "p")
         menu.addItem(soundMenuItem)
         menu.addItem(pauseMenuItem)
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Выйти из WeatherLoop", action: #selector(quitApplication), keyEquivalent: "q")
+        menu.addItem(withTitle: L("menu.quit"), action: #selector(quitApplication), keyEquivalent: "q")
 
         menu.items.forEach { $0.target = self }
         statusItem.menu = menu
@@ -281,8 +291,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
 
         NSApp.activate(ignoringOtherApps: true)
         let panel = NSOpenPanel()
-        panel.title = "Видео для сцены «\(scene.title)»"
-        panel.message = "Выберите локальный видеофайл. Он не копируется и не загружается куда-либо."
+        panel.title = L("panel.videoTitle", scene.title)
+        panel.message = L("panel.videoMessage")
         panel.allowedContentTypes = [.movie, .video, .mpeg4Movie, .quickTimeMovie]
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
@@ -290,20 +300,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
         guard panel.runModal() == .OK, let url = panel.url else { return }
         wallpaper.setVideoURL(url, for: scene)
         _ = wallpaper.apply(scene: scene)
-        setStatus("Видео для «\(scene.title)» выбрано")
+        setStatus(L("status.videoSelected", scene.title))
     }
 
     @objc private func refreshWeather() {
         guard WeatherScene.allCases.allSatisfy(wallpaper.hasVideo(for:)) else {
-            setStatus("Выберите видео для всех четырёх сцен")
+            setStatus(L("status.selectAllScenes"))
             return
         }
         if usesMacLocation {
             requestMacLocation()
         } else if let latitude, let longitude {
-            fetchWeather(latitude: latitude, longitude: longitude, city: cityName ?? "выбранный город")
+            fetchWeather(latitude: latitude, longitude: longitude, city: cityName ?? L("city.selected"))
         } else {
-            setStatus("Задайте город или разрешите геопозицию")
+            setStatus(L("status.setCityOrAllowLocation"))
         }
     }
 
@@ -319,12 +329,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
     @objc private func promptForCity() {
         NSApp.activate(ignoringOtherApps: true)
         let alert = NSAlert()
-        alert.messageText = "Город для погоды"
-        alert.informativeText = "Например: Москва, Ханой или Berlin. WeatherLoop запрашивает только название города у Open‑Meteo."
-        alert.addButton(withTitle: "Сохранить")
-        alert.addButton(withTitle: "Отмена")
+        alert.messageText = L("dialog.cityTitle")
+        alert.informativeText = L("dialog.cityMessage")
+        alert.addButton(withTitle: L("dialog.save"))
+        alert.addButton(withTitle: L("dialog.cancel"))
         let input = NSTextField(string: cityName ?? "")
-        input.placeholderString = "Название города"
+        input.placeholderString = L("dialog.cityPlaceholder")
         input.frame = NSRect(x: 0, y: 0, width: 300, height: 24)
         alert.accessoryView = input
 
@@ -337,45 +347,45 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
     @objc private func toggleSound() {
         let enabled = wallpaper.toggleSound()
         soundMenuItem.title = soundMenuTitle
-        setStatus(enabled ? "Звук включён" : "Звук выключен")
+        setStatus(L(enabled ? "status.soundEnabled" : "status.soundDisabled"))
     }
 
     @objc private func togglePause() {
         isPaused.toggle()
         if isPaused {
             wallpaper.pause()
-            pauseMenuItem.title = "Продолжить"
-            setStatus("Воспроизведение на паузе")
+            pauseMenuItem.title = L("menu.resume")
+            setStatus(L("status.playbackPaused"))
         } else {
             wallpaper.resume()
-            pauseMenuItem.title = "Пауза"
-            setStatus("Воспроизведение продолжается")
+            pauseMenuItem.title = L("menu.pause")
+            setStatus(L("status.playbackResumed"))
         }
     }
 
     @objc private func quitApplication() { NSApp.terminate(nil) }
 
     private var soundMenuTitle: String {
-        wallpaper.soundEnabled ? "Выключить звук" : "Включить звук"
+        L(wallpaper.soundEnabled ? "menu.disableSound" : "menu.enableSound")
     }
 
     private func requestMacLocation() {
         guard CLLocationManager.locationServicesEnabled() else {
-            setStatus("Включите геопозицию или задайте город вручную")
+            setStatus(L("status.locationServicesDisabled"))
             return
         }
 
         switch locationManager.authorizationStatus {
         case .authorizedAlways:
-            setStatus("Определяю погоду по геопозиции Mac…")
+            setStatus(L("status.weatherFromMacLocation"))
             locationManager.requestLocation()
         case .notDetermined:
-            setStatus("Разрешите геопозицию для WeatherLoop")
+            setStatus(L("status.allowLocation"))
             locationManager.requestWhenInUseAuthorization()
         case .denied, .restricted:
-            setStatus("Геопозиция запрещена — задайте город вручную")
+            setStatus(L("status.locationForbidden"))
         @unknown default:
-            setStatus("Не удалось получить доступ к геопозиции")
+            setStatus(L("status.locationUnavailable"))
         }
     }
 
@@ -388,21 +398,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
         fetchWeather(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude,
-            city: "геопозиция Mac"
+            city: L("city.macLocation")
         )
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        setStatus("Геопозиция недоступна — задайте город вручную")
+        setStatus(L("status.locationFailed"))
     }
 
     private func resolve(city: String) {
-        setStatus("Ищу «\(city)»…")
+        setStatus(L("status.searchingCity", city))
         var components = URLComponents(string: "https://geocoding-api.open-meteo.com/v1/search")!
         components.queryItems = [
             URLQueryItem(name: "name", value: city),
             URLQueryItem(name: "count", value: "1"),
-            URLQueryItem(name: "language", value: "ru"),
+            URLQueryItem(name: "language", value: weatherServiceLanguage),
             URLQueryItem(name: "format", value: "json")
         ]
 
@@ -411,7 +421,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
             DispatchQueue.main.async {
                 guard let self else { return }
                 guard let result else {
-                    self.setStatus(error == nil ? "Город не найден" : "Не удалось связаться с Open‑Meteo")
+                    self.setStatus(L(error == nil ? "status.cityNotFound" : "status.weatherServiceFailed"))
                     return
                 }
                 self.usesMacLocation = false
@@ -429,7 +439,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
     }
 
     private func fetchWeather(latitude: Double, longitude: Double, city: String) {
-        setStatus("Обновляю погоду: \(city)…")
+        setStatus(L("status.updatingWeather", city))
         var components = URLComponents(string: "https://api.open-meteo.com/v1/forecast")!
         components.queryItems = [
             URLQueryItem(name: "latitude", value: String(latitude)),
@@ -443,15 +453,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
             DispatchQueue.main.async {
                 guard let self else { return }
                 guard let response else {
-                    self.setStatus(error == nil ? "Open‑Meteo вернул неверный ответ" : "Нет соединения с Open‑Meteo")
+                    self.setStatus(L(error == nil ? "status.weatherInvalidResponse" : "status.noConnection"))
                     return
                 }
                 let scene = self.scene(for: response.current)
                 guard self.wallpaper.apply(scene: scene) else {
-                    self.setStatus("Для «\(scene.title)» не выбрано видео")
+                    self.setStatus(L("status.noVideoForScene", scene.title))
                     return
                 }
-                self.setStatus("\(city): \(scene.title) · обновление через 30 мин")
+                self.setStatus(L("status.weatherUpdated", city, scene.title))
             }
         }.resume()
     }
@@ -473,8 +483,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
 
     private var loginMenuTitle: String {
         FileManager.default.fileExists(atPath: launchAgentURL.path)
-            ? "Не запускать при входе в Mac"
-            : "Запускать при входе в Mac"
+            ? L("menu.disableLaunchAtLogin")
+            : L("menu.enableLaunchAtLogin")
     }
 
     @objc private func toggleLaunchAtLogin() {
@@ -487,15 +497,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
             do {
                 try fileManager.removeItem(at: launchAgentURL)
                 loginMenuItem.title = loginMenuTitle
-                setStatus("Автозапуск отключён")
+                setStatus(L("status.launchAtLoginDisabled"))
             } catch {
-                setStatus("Не удалось отключить автозапуск")
+                setStatus(L("status.launchAtLoginDisableFailed"))
             }
             return
         }
 
         guard let executable = Bundle.main.executablePath else {
-            setStatus("Не найден исполняемый файл приложения")
+            setStatus(L("status.executableNotFound"))
             return
         }
         let agent: [String: Any] = [
@@ -510,9 +520,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
             try data.write(to: launchAgentURL, options: .atomic)
             runLaunchctl(arguments: ["bootstrap", "gui/\(uid)", launchAgentURL.path])
             loginMenuItem.title = loginMenuTitle
-            setStatus("Автозапуск включён")
+            setStatus(L("status.launchAtLoginEnabled"))
         } catch {
-            setStatus("Не удалось включить автозапуск")
+            setStatus(L("status.launchAtLoginEnableFailed"))
         }
     }
 

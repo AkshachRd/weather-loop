@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>ru</string>
+    <string>en</string>
     <key>CFBundleDisplayName</key>
     <string>WeatherLoop</string>
     <key>CFBundleExecutable</key>
@@ -22,9 +22,14 @@
     <string>1</string>
     <key>LSMinimumSystemVersion</key>
     <string>14.0</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>ru</string>
+    </array>
     <key>LSUIElement</key>
     <true/>
     <key>NSLocationUsageDescription</key>
-    <string>WeatherLoop использует геопозицию только для выбора видео по текущей погоде.</string>
+    <string>WeatherLoop uses location only to select a video for the current weather.</string>
 </dict>
 </plist>

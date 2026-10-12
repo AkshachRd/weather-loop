@@ -25,4 +25,8 @@ jobs:
       - name: Verify app bundle
         run: |
           plutil -lint WeatherLoop.app/Contents/Info.plist
+          plutil -lint WeatherLoop.app/Contents/Resources/en.lproj/Localizable.strings
+          plutil -lint WeatherLoop.app/Contents/Resources/ru.lproj/Localizable.strings
+          plutil -lint WeatherLoop.app/Contents/Resources/en.lproj/InfoPlist.strings
+          plutil -lint WeatherLoop.app/Contents/Resources/ru.lproj/InfoPlist.strings
           test -x WeatherLoop.app/Contents/MacOS/WeatherLoop

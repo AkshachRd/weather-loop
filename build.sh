@@ -33,6 +33,10 @@ fi
 cp "$build_dir/WeatherLoop" "$app_dir/Contents/MacOS/WeatherLoop"
 cp "$script_dir/Info.plist" "$app_dir/Contents/Info.plist"
 
+for language in en ru; do
+  cp -R "$script_dir/$language.lproj" "$app_dir/Contents/Resources/"
+done
+
 if [[ -n "${WEATHERLOOP_VERSION:-}" ]]; then
   /usr/libexec/PlistBuddy \
     -c "Set :CFBundleShortVersionString ${WEATHERLOOP_VERSION}" \

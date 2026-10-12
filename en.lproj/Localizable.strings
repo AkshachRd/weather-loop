@@ -1,0 +1,57 @@
+"scene.clear" = "Clear";
+"scene.cloudy" = "Cloudy / fog / snow";
+"scene.night" = "Night";
+"scene.rain" = "Rain / thunderstorm";
+
+"status.preparing" = "Getting ready…";
+"status.selectEachScene" = "Choose a video for every weather scene";
+"status.selectAllScenes" = "Choose videos for all four scenes";
+"status.videoSelected" = "Video selected for “%@”";
+"status.setCityOrAllowLocation" = "Set a city or allow location access";
+"status.soundEnabled" = "Sound on";
+"status.soundDisabled" = "Sound off";
+"status.playbackPaused" = "Playback paused";
+"status.playbackResumed" = "Playback resumed";
+"status.locationServicesDisabled" = "Turn on Location Services or set a city manually";
+"status.weatherFromMacLocation" = "Getting weather from this Mac’s location…";
+"status.allowLocation" = "Allow WeatherLoop to use your location";
+"status.locationForbidden" = "Location access is off — set a city manually";
+"status.locationUnavailable" = "Could not access location";
+"status.locationFailed" = "Location unavailable — set a city manually";
+"status.searchingCity" = "Searching for “%@”…";
+"status.cityNotFound" = "City not found";
+"status.weatherServiceFailed" = "Could not reach Open-Meteo";
+"status.updatingWeather" = "Updating weather: %@…";
+"status.weatherInvalidResponse" = "Open-Meteo returned an invalid response";
+"status.noConnection" = "No connection to Open-Meteo";
+"status.noVideoForScene" = "No video selected for “%@”";
+"status.weatherUpdated" = "%@: %@ · updates every 30 min";
+"status.launchAtLoginDisabled" = "Launch at login disabled";
+"status.launchAtLoginDisableFailed" = "Could not disable launch at login";
+"status.executableNotFound" = "Application executable was not found";
+"status.launchAtLoginEnabled" = "Launch at login enabled";
+"status.launchAtLoginEnableFailed" = "Could not enable launch at login";
+
+"menu.refreshWeather" = "Refresh Weather";
+"menu.setCity" = "Set City…";
+"menu.useMacLocation" = "Use This Mac’s Location";
+"menu.videosForWeather" = "Videos for Weather";
+"menu.enableLaunchAtLogin" = "Launch at Login";
+"menu.disableLaunchAtLogin" = "Do Not Launch at Login";
+"menu.enableSound" = "Enable Sound";
+"menu.disableSound" = "Disable Sound";
+"menu.pause" = "Pause";
+"menu.resume" = "Resume";
+"menu.quit" = "Quit WeatherLoop";
+
+"panel.videoTitle" = "Video for “%@”";
+"panel.videoMessage" = "Choose a local video file. It is not copied or uploaded anywhere.";
+
+"dialog.cityTitle" = "Weather City";
+"dialog.cityMessage" = "For example: London, Hanoi, or Tokyo. WeatherLoop only sends the city name to Open-Meteo.";
+"dialog.save" = "Save";
+"dialog.cancel" = "Cancel";
+"dialog.cityPlaceholder" = "City name";
+
+"city.selected" = "selected city";
+"city.macLocation" = "this Mac’s location";

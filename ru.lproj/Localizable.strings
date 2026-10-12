@@ -1,0 +1,57 @@
+"scene.clear" = "Ясно";
+"scene.cloudy" = "Облачно / туман / снег";
+"scene.night" = "Ночь";
+"scene.rain" = "Дождь / гроза";
+
+"status.preparing" = "Подготовка…";
+"status.selectEachScene" = "Выберите видео для каждой погодной сцены";
+"status.selectAllScenes" = "Выберите видео для всех четырёх сцен";
+"status.videoSelected" = "Видео для «%@» выбрано";
+"status.setCityOrAllowLocation" = "Задайте город или разрешите геопозицию";
+"status.soundEnabled" = "Звук включён";
+"status.soundDisabled" = "Звук выключен";
+"status.playbackPaused" = "Воспроизведение на паузе";
+"status.playbackResumed" = "Воспроизведение продолжается";
+"status.locationServicesDisabled" = "Включите геопозицию или задайте город вручную";
+"status.weatherFromMacLocation" = "Определяю погоду по геопозиции Mac…";
+"status.allowLocation" = "Разрешите геопозицию для WeatherLoop";
+"status.locationForbidden" = "Геопозиция запрещена — задайте город вручную";
+"status.locationUnavailable" = "Не удалось получить доступ к геопозиции";
+"status.locationFailed" = "Геопозиция недоступна — задайте город вручную";
+"status.searchingCity" = "Ищу «%@»…";
+"status.cityNotFound" = "Город не найден";
+"status.weatherServiceFailed" = "Не удалось связаться с Open-Meteo";
+"status.updatingWeather" = "Обновляю погоду: %@…";
+"status.weatherInvalidResponse" = "Open-Meteo вернул неверный ответ";
+"status.noConnection" = "Нет соединения с Open-Meteo";
+"status.noVideoForScene" = "Для «%@» не выбрано видео";
+"status.weatherUpdated" = "%@: %@ · обновление через 30 мин";
+"status.launchAtLoginDisabled" = "Автозапуск отключён";
+"status.launchAtLoginDisableFailed" = "Не удалось отключить автозапуск";
+"status.executableNotFound" = "Не найден исполняемый файл приложения";
+"status.launchAtLoginEnabled" = "Автозапуск включён";
+"status.launchAtLoginEnableFailed" = "Не удалось включить автозапуск";
+
+"menu.refreshWeather" = "Обновить погоду";
+"menu.setCity" = "Задать город…";
+"menu.useMacLocation" = "Использовать геопозицию Mac";
+"menu.videosForWeather" = "Видео для погоды";
+"menu.enableLaunchAtLogin" = "Запускать при входе в Mac";
+"menu.disableLaunchAtLogin" = "Не запускать при входе в Mac";
+"menu.enableSound" = "Включить звук";
+"menu.disableSound" = "Выключить звук";
+"menu.pause" = "Пауза";
+"menu.resume" = "Продолжить";
+"menu.quit" = "Выйти из WeatherLoop";
+
+"panel.videoTitle" = "Видео для сцены «%@»";
+"panel.videoMessage" = "Выберите локальный видеофайл. Он не копируется и не загружается куда-либо.";
+
+"dialog.cityTitle" = "Город для погоды";
+"dialog.cityMessage" = "Например: Москва, Ханой или Berlin. WeatherLoop запрашивает только название города у Open-Meteo.";
+"dialog.save" = "Сохранить";
+"dialog.cancel" = "Отмена";
+"dialog.cityPlaceholder" = "Название города";
+
+"city.selected" = "выбранный город";
+"city.macLocation" = "геопозиция Mac";

@@ -15,6 +15,10 @@
   <img src="https://img.shields.io/badge/macOS-14%2B-1f6feb" alt="macOS 14 or later">
 </p>
 
+<p align="center">
+  <strong>Русский</strong> · <a href="#english">English</a>
+</p>
+
 WeatherLoop — небольшое приложение в строке меню. Ты сам выбираешь локальные ролики для ясной, облачной, ночной и дождливой погоды, а приложение получает актуальные условия и бесшовно меняет видео на рабочем столе.
 
 > [!IMPORTANT]
@@ -92,3 +96,57 @@ Workflow соберёт универсальный `.app` для Apple Silicon �
 ## Лицензия
 
 Код распространяется по [лицензии MIT](LICENSE). Она относится только к WeatherLoop; права на свои видео и право их использовать проверяет сам пользователь.
+
+<a id="english"></a>
+
+---
+
+## English
+
+WeatherLoop is a small macOS menu-bar app that plays your own local videos as a weather-reactive desktop background. Pick one video for each scene — clear, cloudy, night, and rain — then WeatherLoop checks current conditions and switches the video seamlessly.
+
+> [!IMPORTANT]
+> This repository deliberately contains no videos. Chosen media stays on your Mac: WeatherLoop saves local file paths only and never uploads or copies your videos.
+
+### Features
+
+- Four weather scenes: clear, cloudy, night, and rain/thunderstorm.
+- Weather from a manually selected city or macOS Location Services.
+- Sound, pause/resume, manual refresh, login launch, and multiple displays.
+- No account or API key. Weather is provided by Open-Meteo.
+- The interface follows macOS automatically: English for English systems, Russian for Russian systems.
+
+### Quick start
+
+1. Download `WeatherLoop-…-macOS-universal.zip` from the [latest release](https://github.com/AkshachRd/weather-loop/releases/latest).
+2. Unzip it and move `WeatherLoop.app` to Applications.
+3. Launch the app, choose **Videos for Weather**, and select a local video for each scene.
+4. Set a city or allow location access, then choose **Refresh Weather**.
+
+Releases are currently unsigned and not notarized. The first time you open the app, macOS may ask for confirmation; Control-click the app in Finder and choose **Open**.
+
+To build from source, use macOS 14+ with Xcode Command Line Tools:
+
+```sh
+git clone https://github.com/AkshachRd/weather-loop.git
+cd weather-loop
+zsh build.sh
+open WeatherLoop.app
+```
+
+### How it works
+
+macOS has no public API for turning an arbitrary MP4 into a system dynamic wallpaper. WeatherLoop instead creates a non-interactive video window at desktop level: above the static wallpaper and below icons and normal apps. The effect is reversible, but the app must keep running; on quit, macOS immediately shows the previous static wallpaper.
+
+For weather, WeatherLoop talks directly to [Open-Meteo](https://open-meteo.com/en/docs). A manual lookup sends the city name; Location Services sends coordinates. There is no telemetry or account.
+
+### Releases
+
+Every push and pull request to `main` builds in GitHub Actions. Pushing a version tag creates a universal Apple Silicon + Intel ZIP and a GitHub Release:
+
+```sh
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The code is available under the [MIT License](LICENSE). It applies to WeatherLoop only; every user is responsible for having the rights to their own videos.
