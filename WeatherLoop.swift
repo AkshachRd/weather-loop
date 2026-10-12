@@ -478,7 +478,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
 
     private var launchAgentURL: URL {
         FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/LaunchAgents/io.github.akshachrd.weatherloop.plist")
+            .appendingPathComponent("Library/LaunchAgents/app.weatherloop.desktop.plist")
     }
 
     private var loginMenuTitle: String {
@@ -489,7 +489,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, CLLocationManagerDeleg
 
     @objc private func toggleLaunchAtLogin() {
         let fileManager = FileManager.default
-        let label = "io.github.akshachrd.weatherloop"
+        let label = "app.weatherloop.desktop"
         let uid = getuid()
 
         if fileManager.fileExists(atPath: launchAgentURL.path) {

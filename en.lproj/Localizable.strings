@@ -14,7 +14,7 @@
 "status.playbackResumed" = "Playback resumed";
 "status.locationServicesDisabled" = "Turn on Location Services or set a city manually";
 "status.weatherFromMacLocation" = "Getting weather from this Mac’s location…";
-"status.allowLocation" = "Allow WeatherLoop to use your location";
+"status.allowLocation" = "Allow WeatherLoop to use location data";
 "status.locationForbidden" = "Location access is off — set a city manually";
 "status.locationUnavailable" = "Could not access location";
 "status.locationFailed" = "Location unavailable — set a city manually";

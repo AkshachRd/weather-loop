@@ -5,12 +5,10 @@
 <h1 align="center">WeatherLoop</h1>
 
 <p align="center">
-  Живые видеообои для macOS, которые подстраиваются под погоду в твоём городе.
+  Живые видеообои для macOS, которые подстраиваются под погоду в выбранном городе.
 </p>
 
 <p align="center">
-  <a href="https://github.com/AkshachRd/weather-loop/actions/workflows/build.yml"><img src="https://github.com/AkshachRd/weather-loop/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
-  <a href="https://github.com/AkshachRd/weather-loop/releases"><img src="https://img.shields.io/github/v/release/AkshachRd/weather-loop?display_name=tag&sort=semver" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7d5fff" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/macOS-14%2B-1f6feb" alt="macOS 14 or later">
 </p>
@@ -19,10 +17,10 @@
   <strong>Русский</strong> · <a href="#english">English</a>
 </p>
 
-WeatherLoop — небольшое приложение в строке меню. Ты сам выбираешь локальные ролики для ясной, облачной, ночной и дождливой погоды, а приложение получает актуальные условия и бесшовно меняет видео на рабочем столе.
+WeatherLoop — небольшое приложение в строке меню. Для ясной, облачной, ночной и дождливой погоды назначаются локальные ролики, после чего приложение получает актуальные условия и бесшовно меняет видео на рабочем столе.
 
 > [!IMPORTANT]
-> В этом репозитории намеренно нет никаких видео. Выбранные ролики остаются только на твоём Mac: приложение запоминает их пути, но не копирует и никуда не загружает.
+> В этом репозитории намеренно нет никаких видео. Выбранные ролики остаются на устройстве: приложение запоминает их пути, но не копирует и никуда не загружает.
 
 ## Что умеет
 
@@ -38,27 +36,27 @@ WeatherLoop — небольшое приложение в строке меню
 
 ### Из готового релиза
 
-1. Открой [последний релиз](https://github.com/AkshachRd/weather-loop/releases/latest) и скачай `WeatherLoop-…-macOS-universal.zip`.
-2. Распакуй архив и перенеси `WeatherLoop.app` в папку «Программы».
-3. Открой приложение. При первом запуске macOS может попросить подтверждение, потому что сборки пока не подписаны и не нотарифицированы: нажми по приложению с зажатой `Control` → **Открыть**.
+1. В разделе Releases скачать `WeatherLoop-…-macOS-universal.zip`.
+2. Распаковать архив и перенести `WeatherLoop.app` в папку «Программы».
+3. Открыть приложение. При первом запуске macOS может попросить подтверждение, потому что сборки пока не подписаны и не нотарифицированы: нажать по приложению с зажатой `Control` → **Открыть**.
 
 ### Из исходников
 
 Нужны macOS 14+ и Xcode Command Line Tools.
 
 ```sh
-git clone https://github.com/AkshachRd/weather-loop.git
-cd weather-loop
+git clone <repository-url>
+cd WeatherLoop
 zsh build.sh
 open WeatherLoop.app
 ```
 
 ### Настройка в приложении
 
-1. Нажми значок WeatherLoop в строке меню.
-2. Выбери **Видео для погоды…** и укажи свои локальные видео для всех четырёх сцен.
-3. Введи город через **Задать город…** или разреши геопозицию macOS.
-4. Нажми **Обновить погоду**. Сцена будет обновляться автоматически каждые 30 минут.
+1. Открыть меню WeatherLoop в строке меню.
+2. В разделе **Видео для погоды…** указать локальные видео для всех четырёх сцен.
+3. Задать город или разрешить геопозицию macOS.
+4. Выбрать **Обновить погоду**. Сцена будет обновляться автоматически каждые 30 минут.
 
 ## Как это работает
 
@@ -103,10 +101,10 @@ Workflow соберёт универсальный `.app` для Apple Silicon �
 
 ## English
 
-WeatherLoop is a small macOS menu-bar app that plays your own local videos as a weather-reactive desktop background. Pick one video for each scene — clear, cloudy, night, and rain — then WeatherLoop checks current conditions and switches the video seamlessly.
+WeatherLoop is a small macOS menu-bar app that plays local videos as a weather-reactive desktop background. One video is assigned to each scene — clear, cloudy, night, and rain — then WeatherLoop checks current conditions and switches the video seamlessly.
 
 > [!IMPORTANT]
-> This repository deliberately contains no videos. Chosen media stays on your Mac: WeatherLoop saves local file paths only and never uploads or copies your videos.
+> This repository deliberately contains no videos. Chosen media stays on the device: WeatherLoop saves local file paths only and never uploads or copies video files.
 
 ### Features
 
@@ -118,18 +116,18 @@ WeatherLoop is a small macOS menu-bar app that plays your own local videos as a 
 
 ### Quick start
 
-1. Download `WeatherLoop-…-macOS-universal.zip` from the [latest release](https://github.com/AkshachRd/weather-loop/releases/latest).
-2. Unzip it and move `WeatherLoop.app` to Applications.
+1. Download `WeatherLoop-…-macOS-universal.zip` from Releases.
+2. Unzip the archive and move `WeatherLoop.app` to Applications.
 3. Launch the app, choose **Videos for Weather**, and select a local video for each scene.
 4. Set a city or allow location access, then choose **Refresh Weather**.
 
-Releases are currently unsigned and not notarized. The first time you open the app, macOS may ask for confirmation; Control-click the app in Finder and choose **Open**.
+Releases are currently unsigned and not notarized. On first launch, macOS may ask for confirmation; Control-click the app in Finder and choose **Open**.
 
 To build from source, use macOS 14+ with Xcode Command Line Tools:
 
 ```sh
-git clone https://github.com/AkshachRd/weather-loop.git
-cd weather-loop
+git clone <repository-url>
+cd WeatherLoop
 zsh build.sh
 open WeatherLoop.app
 ```
@@ -149,4 +147,4 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-The code is available under the [MIT License](LICENSE). It applies to WeatherLoop only; every user is responsible for having the rights to their own videos.
+The code is available under the [MIT License](LICENSE). It applies to WeatherLoop only; users are responsible for having the rights to the videos they choose.
