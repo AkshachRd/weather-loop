@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build macOS app
+    runs-on: macos-14
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build WeatherLoop
+        run: zsh build.sh
+
+      - name: Verify app bundle
+        run: |
+          plutil -lint WeatherLoop.app/Contents/Info.plist
+          test -x WeatherLoop.app/Contents/MacOS/WeatherLoop

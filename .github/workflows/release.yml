@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish macOS release
+    runs-on: macos-14
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build a universal app
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          WEATHERLOOP_UNIVERSAL=1 WEATHERLOOP_VERSION="$version" WEATHERLOOP_BUILD="$GITHUB_RUN_NUMBER" zsh build.sh
+          lipo -archs WeatherLoop.app/Contents/MacOS/WeatherLoop
+          plutil -lint WeatherLoop.app/Contents/Info.plist
+
+      - name: Package app
+        run: |
+          ditto -c -k --sequesterRsrc --keepParent \
+            WeatherLoop.app "WeatherLoop-${GITHUB_REF_NAME}-macOS-universal.zip"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "WeatherLoop-${GITHUB_REF_NAME}-macOS-universal.zip" \
+            --title "WeatherLoop ${GITHUB_REF_NAME#v}" \
+            --generate-notes

@@ -1,0 +1,11 @@
+.DS_Store
+.build/
+WeatherLoop.app/
+.swiftpm/
+
+# Never add personal wallpaper media to the source repository.
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.gif
